@@ -1,0 +1,43 @@
+.autoCompleteText {
+    width: 100%;
+    border: 1px grey;
+    border-radius: 2px;
+    position: relative;
+}
+
+.suggestion-list{
+    border: 1px solid rgb(236, 218, 218);
+    border-radius: 5px;
+}
+
+.autoCompleteText input {
+    width: 100%;
+    border: 1px solid grey;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.73);
+    padding: 2px 1px;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.autoCompleteText ul{
+    list-style-type: none ;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid grey;
+}
+.autoCompleteText li{
+    padding: 2px 1px;
+    cursor: pointer;
+}
+
+.autoCompleteText ul::before{
+    content: "";
+}
+
+.autoCompleteText li:hover{
+    text-decoration: underline;
+    background-color: rgba(128, 128, 128, 0.20);
+}

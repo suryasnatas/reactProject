@@ -1,0 +1,148 @@
+html, body {
+  height: 129vh;
+  background: #eee;
+}
+
+.app {
+  background: #eee;
+}
+
+.registerGrid {
+  height: 103vh;
+  background: #eee;
+}
+
+.app-segment {
+  background: rgb(158, 12, 158);
+}
+
+.flexible-modal {
+  position: absolute;
+  z-index: 1;
+  border: 1px solid #ccc;
+  background: white;
+}
+
+.flexible-modal-mask {
+  position: fixed;
+  height: 100%;
+  background: rgba(55, 55, 55, 0.6);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.flexible-modal-resizer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  cursor: se-resize;
+  margin: 5px;
+  border-bottom: solid 2px #333;
+  border-right: solid 2px #333;
+}
+
+.flexible-modal-drag-area {
+  background: rgba(22, 22, 333, 0.2);
+  height: 50px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: move;
+}
+
+.toggle-button {
+  height: 24px;
+  justify-content: space-around;
+  width: 30px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  flex-direction: column;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.toggle-button:focus {
+  outline: none;
+}
+
+.toggle-button_line {
+  width: 30px;
+  height: 1px;
+  background: white;
+}
+
+.wrapper {
+  margin: 50px auto;
+  width: 280px;
+  height: 370px;
+  background: white;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 90;
+}
+
+.ribbon-wrapper-green {
+  width: 85px;
+  height: 88px;
+  overflow: hidden;
+  position: absolute;
+  top: -3px;
+  right: -3px;
+}
+
+.ribbon-green {
+  font: bold 15px Sans-Serif;
+  color: #333;
+  text-align: center;
+  text-shadow: rgba(255, 255, 255, 0.5) 0px 1px 0px;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  position: relative;
+  padding: 7px 0;
+  left: -5px;
+  top: 15px;
+  width: 120px;
+  background-color: #BFDC7A;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#BFDC7A), to(#8EBF45));
+  background-image: -webkit-linear-gradient(top, #BFDC7A, #8EBF45);
+  background-image: -moz-linear-gradient(top, #BFDC7A, #8EBF45);
+  background-image: -ms-linear-gradient(top, #BFDC7A, #8EBF45);
+  background-image: -o-linear-gradient(top, #BFDC7A, #8EBF45);
+  color: #6a6340;
+  -webkit-box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+}
+
+.ribbon-green:before, .ribbon-green:after {
+  content: "";
+  border-top: 3px solid #6e8900;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  position: absolute;
+  bottom: -3px;
+}
+
+.ribbon-green:before {
+  left: 0;
+}
+
+.ribbon-green:after {
+  right: 0;
+}
+
+.cardHover:hover {
+  background-color: rgb(114, 100, 100);
+}
+
+.bg-custom {
+  background: blue;
+}

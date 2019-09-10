@@ -1,0 +1,50 @@
+.uploadButton {
+    /* background-color: rgb(77, 68, 68); */
+    background-color: rgb(87, 87, 238);
+    border: none;
+    border-radius: 3px;
+    color: white;
+    padding: 12.5px 25.62px;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 0px 2px;
+    cursor: pointer;
+}
+
+.finalUploadButton {
+    /* background-color: rgb(77, 68, 68); */
+    background-color: rgb(238, 173, 87);
+    border: none;
+    border-radius: 3px;
+    color: white;
+    padding: 12.5px 25.62px;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 0px 2px;
+    cursor: pointer;
+}
+
+.finalUploadButton:hover {
+    background-color: rgb(114, 100, 100);
+}
+
+.uploadButton:hover {
+    background-color: rgb(114, 100, 100);
+}
+
+.grid-column {
+    max-width: 550px;
+}
+
+.city-width {
+    width: 600px;
+}
+
+.file {
+    width: 250px;
+    float: left;
+}
+
+.checkbox {
+    margin-top: 3px;
+}
