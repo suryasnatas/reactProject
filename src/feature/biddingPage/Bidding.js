@@ -72,7 +72,7 @@ class Bidding extends Component {
                                         Bid
                                     </Button>
 
-                                    <Card.Header><Label color="blue" size="big" ribbon>Fiber expansion in Derby</Label></Card.Header>
+                                    <Card.Header><Label color="blue" size="big" ribbon>{this.props.projectTitle}</Label></Card.Header>
 
                                     <Card.Meta>
                                         <span className='ends'>Ends:<span style={{ color: "black" }}>ends</span></span>&nbsp;&nbsp;
@@ -217,7 +217,13 @@ const mapStateToProps = state => {
         num4: state.biddingReducer.num4,
         total: state.biddingReducer.total,
         isLoggedIn: state.loginReducer.isLoggedIn,
-        workItems: state.biddingReducer.workItems
+        workItems: state.biddingReducer.workItems,
+        projectTitle: state.biddingReducer.projectTitle,
+        location: state.biddingReducer.location,
+        postedBy: state.biddingReducer.postedBy,
+        endsBy: state.biddingReducer.endsBy,
+        comment: state.biddingReducer.comment,
+        basePrice: state.biddingReducer.basePrice
     }
 }
 

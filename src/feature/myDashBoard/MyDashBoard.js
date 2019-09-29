@@ -25,6 +25,11 @@ class MyDashBoard extends Component {
         this.props.getDataFromAllProjects();
     }
 
+    getProject = (projectId) => {
+        this.props.getProject(projectId);
+        this.props.history.push('/bidding');
+    }
+
     render() {
         if (this.props.isLoggedIn === false) {
             return <Redirect to='' />
@@ -49,9 +54,18 @@ class MyDashBoard extends Component {
                                         <CardBody >
                                             <table style={{ float: "right" }}>
                                                 <tbody>
-                                                    <tr><td>BP: ${el.basePrice}</td></tr>
-                                                    <tr><td><MDBBtn rounded color="info" style={{ float: "right" }}>BidNow</MDBBtn>
-                                                    </td></tr>
+                                                    <tr>
+                                                        <td>BP: ${el.basePrice}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <MDBBtn rounded
+                                                                color="info"
+                                                                style={{ float: "right" }}
+                                                                onClick={() => this.getProject(el.projectId)}>
+                                                                Bid
+                                                            </MDBBtn>
+                                                        </td></tr>
                                                 </tbody>
                                             </table>
 
@@ -63,7 +77,7 @@ class MyDashBoard extends Component {
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <th style={{ fontSize: "16px" }} colSpan="7"> <a href="/bidding">{el.projectTitle}</a></th>
+                                                        <th style={{ fontSize: "16px" }} colSpan="7" >{el.projectTitle}</th>
                                                     </tr>
                                                     <tr>
                                                         <td style={{ color: "grey" }}>Location:</td>
@@ -122,7 +136,7 @@ class MyDashBoard extends Component {
                                                 </div>
                                             </CardSubtitle>
 
-                                            
+
                                             <CardText id="center"><Link to="/profile"><MDBBtn rounded color="success">Update Profile</MDBBtn></Link></CardText>
 
                                         </CardBody>
@@ -292,7 +306,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getDataFromAllProjects: () => dispatch(actionCreator.getDataFromAllProjects())
+        getDataFromAllProjects: () => dispatch(actionCreator.getDataFromAllProjects()),
+        getProject: (projectId) => dispatch(actionCreator.getProject(projectId))
     }
 }
 

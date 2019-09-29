@@ -3,7 +3,7 @@
  */
 import { UPDATE_BIDDING_LIST, UPDATE_ALL_PROJECT_LIST, UPDATE_PROJECT_LIST, USERNAME_OR_EMAIL_ALREADY_EXISTS, EMAIL_ALREADY_EXISTS } from '../actions/constants'
 import axios from 'axios';
-
+//import { browserHistory } from 'react-router';
 // GET MyBids data from database
 export const getDataFromMyBids = () => dispatch => {
 
@@ -69,6 +69,29 @@ export const getDataFromAllProjects = () => dispatch => {
              */
             dispatch({
                 type: UPDATE_ALL_PROJECT_LIST,
+                payload: res.data
+            })
+        }
+        );
+}
+
+// GET Particular Project data from database
+export const getProject = (projectId) => dispatch => {
+
+    /**
+     * @param {*} URL
+     * It's a REST endpoint that gets data from DB: myProjects
+     */
+    const URL = 'http://localhost:8080/getProject/' + projectId;
+
+    axios.get(URL)
+        .then(res => {
+            /**
+             * @param UPDATE_PROJECT_DETAILS
+             * @Location '../reducers/feature_myDashBoard/MyDashBoard.js'
+             */
+            dispatch({
+                type: "UPDATE_PROJECT_DETAILS",
                 payload: res.data
             })
         }

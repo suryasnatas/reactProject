@@ -13,7 +13,13 @@ const initialState = {
         { unicID: "ID79879", workItem: "Civil Wiring", quantity: "1", basePrice: "18" },
         { unicID: "ID79879", workItem: "Wire(Under)", quantity: "2", basePrice: "180" },
         { unicID: "ID79879", workItem: "Wire", quantity: "5", basePrice: "50" }
-    ]
+    ],
+    projectTitle: '',
+    location: '',
+    postedBy: '',
+    endsBy: '',
+    comment: '',
+    basePrice: ''
 }
 
 const reducer_bidding = (state = initialState, action) => {
@@ -39,6 +45,17 @@ const reducer_bidding = (state = initialState, action) => {
 
         case "FINAL_BID_PRICE":
             return { ...state, finalYourBid: action.payload, modalIsopen: !state.modalIsopen }
+
+        case "UPDATE_PROJECT_DETAILS":
+            return {
+                ...state,
+                projectTitle: action.payload.projectTitle,
+                location: action.payload.location,
+                postedBy: action.payload.postedBy,
+                endsBy: action.payload.endsBy,
+                comment: action.payload.comment,
+                basePrice: action.payload.basePrice
+            }
 
         case "LOGOUT":
             return {
