@@ -11,6 +11,8 @@ import Autocomplete from 'react-google-autocomplete';
 import '../../styles/Registration.css';
 import * as postActions from "../../actions/postActions";
 import * as getActions from "../../actions/getActions";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import LoginAfterRegistration from '../login/LoginAfterRegistration';
 
 /**
  * User defined Components
@@ -20,6 +22,7 @@ import * as getActions from "../../actions/getActions";
 import Footer from '../../components/footer/Footer';
 import TopHeader from '../../components/header/Header';
 import { countriesList } from './countries';
+
 
 class Registration extends React.Component {
 
@@ -48,9 +51,9 @@ class Registration extends React.Component {
 
         let action = event.target.name;
         let payload = event.target.value;
-        action==='SET_EMAIL'?this.setState({errors:[]}):
+        action === 'SET_EMAIL' ? this.setState({ errors: [] }) :
 
-        console.log("handle change " + action + ":" + payload)
+            console.log("handle change " + action + ":" + payload)
         this.props.setData(action, payload);
     }
     /**
@@ -93,7 +96,7 @@ class Registration extends React.Component {
         let errors = [];
         let error;
         this.setState({
-            errors:[]
+            errors: []
         })
 
         console.log("blur check")
@@ -122,6 +125,7 @@ class Registration extends React.Component {
         if (this.isFormValid()) {
             let errors = [];
             let error;
+
 
             const formData = new FormData();
             formData.append('profileImage', this.state.file);
@@ -152,9 +156,11 @@ class Registration extends React.Component {
             else {
                 this.setState({
                     errors: []
+
                 })
             }
 
+            // this.props.history.push('/login');
             return true;
         }
     }
@@ -251,6 +257,8 @@ class Registration extends React.Component {
             color: "red"
         }
 
+        let isModelOpen = this.props.success === "success" ? true : false;
+
         return (
 
             <Grid textAlign="center" verticalAlign="middle" className="registerGrid">
@@ -277,7 +285,7 @@ class Registration extends React.Component {
                             <Segment stacked>
                                 <Header as="h5" icon color="grey" textAlign="center">
                                     Get started with marketplace by filling out this form
-                        </Header>
+                                </Header>
                                 <br />
                                 {/* Company name or Individual */}
                                 <Form.Input
@@ -464,6 +472,28 @@ class Registration extends React.Component {
 
                         </Form>
 
+                        {/**
+                        Toggles Login after successful Registration
+                        */}
+                        <Modal size="lg" fade={true} isOpen={isModelOpen}>
+
+                            <ModalHeader>
+                                <span style={{ marginLeft: "520px", float: "right", cursor: "pointer" }} onClick={this.props.toggleModal}>X</span>
+                                <b style={{ fontSize: "20px", padding: "5px" }}>Registration is successful.</b><br />
+                                <span style={{ fontSize: "18px", color: "gray", marginLeft: "4px", padding: "3px" }}>Please Login to proceed further :)</span>
+                            </ModalHeader>
+
+                            <ModalBody>
+                                <LoginAfterRegistration />
+                            </ModalBody>
+
+                            <ModalFooter>
+                                <Button color="red" onClick={this.props.toggleModal}>Close</Button>
+                                <Button color="blue" onClick={() => this.handleSubmit(this.props.yourBid)}>Bid</Button>
+                            </ModalFooter>
+
+                        </Modal>
+
                         {errors.length > 0 && (
                             <Message error>
                                 <h3>Error</h3>
@@ -517,6 +547,7 @@ const mapStateToProps = state => {
         city: state.registrationReducer.city,
         successEmail: state.registrationReducer.successEmail,
         successUsername: state.registrationReducer.successUsername,
+        success: state.registrationReducer.success,
     }
 }
 
@@ -528,7 +559,8 @@ const mapDispatchToProps = dispatch => {
         setData: (action, payload) => dispatch({ type: action, payload: payload }),
         resetSuccess: () => dispatch({ type: "RESET_SUCCESS" }),
         validateUsername: (username, usernameOremail) => dispatch(getActions.validateUsername(username, usernameOremail)),
-        validateEmail: (email) => dispatch(getActions.validateEmail(email))
+        validateEmail: (email) => dispatch(getActions.validateEmail(email)),
+        toggleModal: () => dispatch({ type: "TOGGLE_REGISTRATION_MODAL" }),
     }
 }
 

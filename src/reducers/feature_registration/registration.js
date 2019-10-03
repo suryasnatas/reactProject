@@ -33,13 +33,34 @@ const reducer_registration = (state = initialState, action) => {
     switch (action.type) {
 
         case SUCCESS_REGISTRATION:
-            return { ...state, success: action.payload }
+            return {
+                ...state, success: action.payload,
+                businessFlag: false,
+                supplierFlag: false,
+                supplier: '',
+                business: '',
+                isBusinessSliderEnabled: false,
+                isSupplierSliderEnabled: false,
+                suggestions: [],
+                count: 0,
+                username: '',
+                address: '',
+                postCode: '',
+                country: '',
+                city: '',
+                password: '',
+                email: '',
+                phoneNumber: ''
+            }
+
+        case "TOGGLE_REGISTRATION_MODAL":
+            return { ...state, success: "Registration is successful" }
 
         case USERNAME_ALREADY_EXISTS:
             return { ...state, success: action.payload }
 
         case USERNAME_OR_EMAIL_ALREADY_EXISTS:
-            return { ...state, successUsername: action.payload, successEmail:'' }
+            return { ...state, successUsername: action.payload, successEmail: '' }
 
         case EMAIL_ALREADY_EXISTS:
             return { ...state, successEmail: action.payload, successUsername: '' }
