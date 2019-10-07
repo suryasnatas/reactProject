@@ -40,11 +40,7 @@ class HeaderPage extends React.Component {
                                     items={[
                                         <Link to='/profile' style={{ float: "left" }}>
                                             <MenuItem style={{ color: "purple" }}>MyProfile</MenuItem>
-                                        </Link>,
-                                        <Link to='/mainDashboard' style={{ float: "left" }}>
-                                            <MenuItem style={{ color: "purple" }}>MainDashBoard</MenuItem>
-                                        </Link>,
-
+                                        </Link>
                                     ]} />
                             </Grid.Column>
 
