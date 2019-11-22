@@ -478,9 +478,10 @@ class Registration extends React.Component {
                         <Modal size="lg" fade={true} isOpen={isModelOpen}>
 
                             <ModalHeader>
-                                <span style={{ marginLeft: "520px", float: "right", cursor: "pointer" }} onClick={this.props.toggleModal}>X</span>
-                                <b style={{ fontSize: "20px", padding: "5px" }}>Registration is successful.</b><br />
-                                <span style={{ fontSize: "18px", color: "gray", marginLeft: "4px", padding: "3px" }}>Please Login to proceed further :)</span>
+                                <span style={{ marginLeft: "520px", float: "right" }}></span>
+                                <Message success>
+                                    <h1>Registration is successful</h1>
+                                </Message>
                             </ModalHeader>
 
                             <ModalBody>

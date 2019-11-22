@@ -67,7 +67,7 @@ class HeaderPage extends React.Component {
                             {
                                 this.props.isLoggedIn ? (
                                     <Grid.Column width={1} style={{ marginTop: "10px" }}>
-                                        <Link to="bid"> <Header inverted as='h4' content='MyBids' />
+                                        <Link to="myBids"> <Header inverted as='h4' content='MyBids' />
                                         </Link>
                                     </Grid.Column>
                                 ) : (<div></div>)

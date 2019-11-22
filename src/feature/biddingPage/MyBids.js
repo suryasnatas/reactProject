@@ -219,17 +219,17 @@ class Bid extends Component {
 
 const mapStateToProps = state => {
     return {
-        posts: state.bidReducer.posts,
-        recommendations: state.bidReducer.recommendations,
-        begin: state.bidReducer.begin,
-        end: state.bidReducer.end,
-        page: state.bidReducer.page,
-        visible: state.bidReducer.visible,
-        title: state.bidReducer.title,
-        modalIsopen: state.bidReducer.modalIsopen,
-        basePrice: state.bidReducer.basePrice,
-        index: state.bidReducer.index,
-        location: state.bidReducer.location,
+        posts: state.myBidsReducer.posts,
+        recommendations: state.myBidsReducer.recommendations,
+        begin: state.myBidsReducer.begin,
+        end: state.myBidsReducer.end,
+        page: state.myBidsReducer.page,
+        visible: state.myBidsReducer.visible,
+        title: state.myBidsReducer.title,
+        modalIsopen: state.myBidsReducer.modalIsopen,
+        basePrice: state.myBidsReducer.basePrice,
+        index: state.myBidsReducer.index,
+        location: state.myBidsReducer.location,
         isLoggedIn: state.loginReducer.isLoggedIn,
     }
 }

@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import bidReducer from './feature_biddingPage/Bid';
+import myBidsReducer from './feature_biddingPage/myBids';
 import biddingReducer from './feature_biddingPage/Bidding';
 import registrationReducer from './feature_registration/registration';
 import loginReducer from './feature_login/login';
@@ -10,7 +10,7 @@ import reducer_profileUpdate from './feature_profile/profile';
  * Combining reducers
  */
 export default combineReducers({
-    bidReducer: bidReducer,
+    myBidsReducer: myBidsReducer,
     biddingReducer: biddingReducer,
     registrationReducer: registrationReducer,
     loginReducer: loginReducer,

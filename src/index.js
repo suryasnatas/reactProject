@@ -20,7 +20,7 @@ import Login from "./feature/login/Login"
 import Frontpage from './components/frontPage/FrontPage';
 import Chart from '../src/feature/dashboard/chart'
 import UserDashboard from './feature/dashboard/userDashboard/UserDashboard';
-import Bid from './feature/biddingPage/Bid';
+import MyBids from './feature/biddingPage/MyBids';
 import Milestone from './feature/milestoneBar/Milestone';
 import MyProjects from './feature/myProjects/MyProjects';
 import MyCards from './feature/myCards/MyCards';
@@ -44,7 +44,7 @@ class Root extends React.Component {
                 <Route path="/index" component={Frontpage} />
                 <Route path="/dash" component={Chart} />
                 <Route path="/userdash" component={UserDashboard} />
-                <Route path="/bid" component={Bid} />
+                <Route path="/myBids" component={MyBids} />
                 <Route path="/mile" component={Milestone} />
                 <Route path="/myProjects" component={MyProjects} />
                 <Route path="/cards" component={MyCards} />
