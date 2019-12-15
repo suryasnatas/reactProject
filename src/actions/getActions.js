@@ -5,13 +5,13 @@ import { UPDATE_BIDDING_LIST, UPDATE_ALL_PROJECT_LIST, UPDATE_PROJECT_LIST, USER
 import axios from 'axios';
 //import { browserHistory } from 'react-router';
 // GET MyBids data from database
-export const getDataFromMyBids = () => dispatch => {
+export const getDataFromMyBids = (email) => dispatch => {
 
     /**
      * @param {*} URL
      * It's a REST endpoint that gets data from DB: myBids
      */
-    const URL = `http://localhost:8080/getMyBids`;
+    const URL = `http://localhost:8080/getMyBids/`+ email ;
 
     axios.get(URL)
         .then(res => {
@@ -77,7 +77,7 @@ export const getDataFromAllProjects = () => dispatch => {
 
 // GET Particular Project data from database
 export const getProject = (projectId) => dispatch => {
-
+    console.log("project id is");
     /**
      * @param {*} URL
      * It's a REST endpoint that gets data from DB: myProjects
@@ -90,6 +90,7 @@ export const getProject = (projectId) => dispatch => {
              * @param UPDATE_PROJECT_DETAILS
              * @Location '../reducers/feature_myDashBoard/MyDashBoard.js'
              */
+            console.log(res.data);
             dispatch({
                 type: "UPDATE_PROJECT_DETAILS",
                 payload: res.data
@@ -140,6 +141,60 @@ export const validateEmail = (email) => dispatch => {
              */
             dispatch({
                 type: EMAIL_ALREADY_EXISTS,
+                payload: res.data
+            })
+        }
+        );
+}
+
+
+export const proceedToUpdateMyBids = (projectId, finalBidPrice) => dispatch => {
+
+    /**
+     * @param {*} URL
+     * It's a REST endpoint that gets data from DB: myProjects
+     */
+
+    console.log("valid")
+    const URL = 'http://localhost:8080/updateMyBids/' + projectId + "/" + finalBidPrice;
+
+    console.log("emailV")
+    axios.get(URL)
+        .then(res => {
+            /**
+             * @param EMAIL_ALREADY_EXISTS
+             * @Location '../reducers/feature_myProjects/MyProjects.js'
+             */
+            dispatch({
+                type: EMAIL_ALREADY_EXISTS,
+                payload: res.data
+            })
+        }
+        );
+}
+
+
+export const getOtherSupplierBids = (email) => dispatch => {
+
+    /**
+     * @param {*} URL
+     * It's a REST endpoint that gets data from DB: myProjects
+     */
+
+    console.log("valid")
+    const URL = 'http://localhost:8080/getOtherSupplierBids/'+ email;
+
+    console.log("emailV")
+    axios.get(URL)
+        .then(res => {
+            /**
+             * @param OTHER_SUPPLIERS
+             * @Location '../reducers/feature_myProjects/MyProjects.js'
+             */
+            console.log(res.data);
+
+            dispatch({
+                type: "OTHER_SUPPLIERS",
                 payload: res.data
             })
         }

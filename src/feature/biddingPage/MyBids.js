@@ -16,9 +16,9 @@ import { Redirect } from 'react-router-dom'
 
 class Bid extends Component {
 
-    componentDidMount() {
+    componentDidMount = () => {
         // Fetching data from MyBids Document
-        this.props.getDataFromMyBids();
+        this.props.getDataFromMyBids(this.props.currentLoggedInUserEmail);
     }
 
     state = {
@@ -231,6 +231,7 @@ const mapStateToProps = state => {
         index: state.myBidsReducer.index,
         location: state.myBidsReducer.location,
         isLoggedIn: state.loginReducer.isLoggedIn,
+        currentLoggedInUserEmail: state.loginReducer.email
     }
 }
 
@@ -241,7 +242,7 @@ const mapDispatchToProps = dispatch => {
         reset: () => dispatch({ type: HANDLE_RESET }),
         toggleModal: (title, basePrice, index, location) => dispatch({ type: TOGGLE_MODAL, title: title, basePrice: basePrice, index: index, location: location }),
         yourBid: (yourBid) => dispatch({ type: YOUR_BID, yourBid: yourBid }),
-        getDataFromMyBids: () => dispatch(actionCreator.getDataFromMyBids())
+        getDataFromMyBids: (email) => dispatch(actionCreator.getDataFromMyBids(email))
     }
 }
 

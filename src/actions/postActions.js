@@ -30,7 +30,7 @@ export const fetchPostsWithRedux = (formData) => dispatch => {
             * @param {*} USERNAME_ALREADY_EXISTS
             * @Location '../reducers/feature_registration/registration.js'
             */
-           console.log("I AM HERE")
+                console.log("I AM HERE")
                 dispatch({
                     type: USERNAME_ALREADY_EXISTS,
                     payload: "username already exists"
@@ -78,5 +78,26 @@ export const updateUserDetails = (formData) => dispatch => {
         }
         );
 
-    
+
+}
+
+
+export const updateMyBids = (allProjects, finalBidPrice, email) => dispatch => {
+
+    const URL = "http://localhost:8080/updateMyBids/" + finalBidPrice + "/" + email;
+
+    axios.post(URL, allProjects)
+        .then(response => {
+            /**
+              * @case {*} SUCCESS_UPDATION
+              * @Location '../reducers/feature_profile/profile.js'
+              */
+            dispatch({
+                type: 'UPDATE_PROFILE_SUCCESS',
+                payload: response.data
+            })
+        }
+        );
+
+
 }

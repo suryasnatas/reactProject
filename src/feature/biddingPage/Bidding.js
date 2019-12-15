@@ -10,10 +10,24 @@ import { connect } from 'react-redux';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Redirect } from 'react-router-dom';
 import '../../styles/App.css';
+import * as postActionCreator from '../../actions/postActions';
+import * as getActionCreator from '../../actions/getActions';
+
+
 
 class Bidding extends Component {
 
-    handleSubmit = (total) => { this.props.finalBidPrice("$" + total) }
+    state = {
+        proceed: false,
+        showOtherSuppliers: false
+    }
+
+    handleSubmit = (total) => {
+        this.setState({
+            proceed: true
+        })
+        this.props.finalBidPrice("$" + total)
+    }
 
     handleChange = (param, event) => {
         let key = param.key;
@@ -35,6 +49,38 @@ class Bidding extends Component {
         }
     }
 
+    handleProceed = (finalBidPrice) => {
+
+        this.setState({
+            proceed: false
+        })
+
+        let allProject = {
+            projectId: this.props.projectId,
+            projectTitle: this.props.projectTitle,
+            location: this.props.location,
+            postedBy: this.props.postedBy,
+            endsBy: this.props.endsBy,
+            comment: this.props.comment,
+            basePrice: this.props.basePrice
+        }
+
+        this.props.updateMyBids(allProject, finalBidPrice, this.props.currentLoggedInUserEmail);
+    }
+
+    handleShowOtherSuppliers = () => {
+        this.props.getOtherSupplierBids(this.props.currentLoggedInUserEmail);
+        this.setState({
+            showOtherSuppliers: true
+        })
+    }
+
+    close = () => {
+        this.setState({
+            showOtherSuppliers: false
+        })
+    }
+
     render() {
 
         if (this.props.isLoggedIn === false) {
@@ -46,6 +92,7 @@ class Bidding extends Component {
 
         return (
             <div>
+
 
                 {/**
                   * HEADER
@@ -82,39 +129,28 @@ class Bidding extends Component {
 
                                     <div>
                                         <br />
-                                        <Button as='div' labelPosition='right'>
-                                            <Button basic color='blue'>
-                                                <Icon name='fork' />
-                                                Talk Talk
+                                        <Button basic color='blue' onClick={this.handleShowOtherSuppliers}>
+                                            <Icon name='fork' />
+                                            Show Bids By Other Suppliers
                                         </Button>
-                                            <Label as='a' basic color='blue' pointing='left'>
-                                                $1050
-                                        </Label>
-                                        </Button>
-                                        <Button as='div' labelPosition='right'>
-                                            <Button basic color='blue'>
-                                                <Icon name='fork' />
-                                                Sky
-                                        </Button>
-                                            <Label as='a' basic color='blue' pointing='left'>
-                                                $1000
-                                        </Label>
-                                        </Button>
-                                        <Button as='div' labelPosition='right'>
-                                            <Button basic color='blue'>
-                                                <Icon name='fork' />
-                                                VodaFone
-                                        </Button>
-                                            <Label as='a' basic color='blue' pointing='left'>
-                                                $3000
-                                        </Label>
-                                        </Button>
+
 
                                         <div className="card-button" style={{ color: "blue", borderRadius: "2px", background: "white", marginLeft: "10px", marginRight: "10px" }}>
                                             <table>
                                                 <tbody>
                                                     <tr><td><b style={{ color: "black" }}><Label color="purple" ribbon>Your Bid</Label></b></td></tr>
                                                     <tr><td><b>{this.props.finalYourBid}</b></td></tr>
+                                                    {
+                                                        this.state.proceed ? (<tr><td>   <Button
+                                                            onClick={() => this.handleProceed(this.props.finalYourBid)}
+                                                            color="green"
+                                                            className="card-button"
+                                                            size="small">
+                                                            Proceed >>
+                                                         </Button>
+                                                        </td></tr>) : ("")
+                                                    }
+
                                                 </tbody>
                                             </table>
                                         </div>
@@ -126,7 +162,45 @@ class Bidding extends Component {
                     <br />
 
                     {/**
-                      * MODAL
+                      * MODAL TO SHOW OTHER BIDDERS
+                      */}
+                    <Modal size="lg" fade={true} isOpen={this.state.showOtherSuppliers}>
+
+                        <ModalHeader>
+                            <span style={{ marginLeft: "520px", float: "right", cursor: "pointer" }} onClick={this.close}>X</span>
+                            <b style={{ fontSize: "20px", padding: "5px" }}>Bids By Other Suppliers</b><br />
+                        </ModalHeader>
+
+                        <ModalBody>
+                            {
+                                this.props.otherSuppliers.map((supplier, key) => (
+
+                                    <div key={key}>
+                                        <Button onClick={() => this.props.getOtherSupplierBids(this.props.currentLoggedInUserEmail)} as='div' labelPosition='right'>
+                                            <Button basic color='blue'>
+                                                <Icon name='fork' />
+                                                {supplier.email}
+                                            </Button>
+                                            <Label as='a' basic color='blue' pointing='left'>
+                                                {supplier.yourBid}
+                                            </Label>
+                                        </Button>
+                                    </div>
+                                ))
+                            }
+                        </ModalBody>
+
+                        <ModalFooter>
+                            <Button color="red" onClick={this.close}>Close</Button>
+                        </ModalFooter>
+
+                    </Modal>
+
+
+
+
+                    {/**
+                      * MODAL FOR BIDDING
                       */}
                     <Modal size="lg" fade={true} isOpen={this.props.modalIsopen}>
 
@@ -218,12 +292,15 @@ const mapStateToProps = state => {
         total: state.biddingReducer.total,
         isLoggedIn: state.loginReducer.isLoggedIn,
         workItems: state.biddingReducer.workItems,
+        projectId: state.biddingReducer.projectId,
         projectTitle: state.biddingReducer.projectTitle,
         location: state.biddingReducer.location,
         postedBy: state.biddingReducer.postedBy,
         endsBy: state.biddingReducer.endsBy,
         comment: state.biddingReducer.comment,
-        basePrice: state.biddingReducer.basePrice
+        basePrice: state.biddingReducer.basePrice,
+        currentLoggedInUserEmail: state.loginReducer.email,
+        otherSuppliers: state.biddingReducer.otherSuppliers,
     }
 }
 
@@ -235,6 +312,8 @@ const mapDispatchToProps = dispatch => {
         handleNum3: (value) => dispatch({ type: "NUM_THREE", payload: value }),
         handleNum4: (value) => dispatch({ type: "NUM_FOUR", payload: value }),
         finalBidPrice: (value) => dispatch({ type: "FINAL_BID_PRICE", payload: value }),
+        updateMyBids: (allProject, finalBidPrice, email) => dispatch(postActionCreator.updateMyBids(allProject, finalBidPrice, email)),
+        getOtherSupplierBids: (email) => dispatch(getActionCreator.getOtherSupplierBids(email))
     }
 }
 

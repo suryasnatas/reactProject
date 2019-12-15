@@ -479,7 +479,7 @@ class Registration extends React.Component {
 
                             <ModalHeader>
                                 <span style={{ marginLeft: "520px", float: "right" }}></span>
-                                <Message success>
+                                <Message success style={{marginLeft:"240px"}}>
                                     <h1>Registration is successful</h1>
                                 </Message>
                             </ModalHeader>
