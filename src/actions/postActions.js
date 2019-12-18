@@ -101,3 +101,24 @@ export const updateMyBids = (allProjects, finalBidPrice, email) => dispatch => {
 
 
 }
+
+/**
+ * @param {*} formData 
+ * Saves registration data in database
+ */
+export const saveProjectDetails = (formData) => dispatch => {
+
+    const URL = "http://localhost:8080/saveProjectDetails";
+
+    axios.post(URL, formData)
+        .then(response => {
+            console.log(response.data)
+
+           dispatch({
+                type: USERNAME_ALREADY_EXISTS,
+                payload: "username already exists"
+            })
+        }
+        
+        );
+}

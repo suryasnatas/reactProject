@@ -28,6 +28,7 @@ import Bidding from './feature/biddingPage/Bidding';
 import LandingPage from './feature/landingPage/LandingPage';
 import MyDashBoard from './feature/myDashBoard/MyDashBoard';
 import Profile from './feature/profile/Profile';
+import CreateProject from './feature/admin_createProject/CreateProject';
 
 
 class Root extends React.Component {
@@ -52,7 +53,7 @@ class Root extends React.Component {
                 <Route path="/landing" component={LandingPage} />
                 <Route path="/myDashboard" component={MyDashBoard} />
                 <Route path="/profile" component={Profile} />
-                
+                <Route path="/createProject" component={CreateProject} />
             </Switch>
         );
     }
