@@ -196,9 +196,6 @@ class Bidding extends Component {
 
                     </Modal>
 
-
-
-
                     {/**
                       * MODAL FOR BIDDING
                       */}
@@ -313,7 +310,8 @@ const mapDispatchToProps = dispatch => {
         handleNum4: (value) => dispatch({ type: "NUM_FOUR", payload: value }),
         finalBidPrice: (value) => dispatch({ type: "FINAL_BID_PRICE", payload: value }),
         updateMyBids: (allProject, finalBidPrice, email) => dispatch(postActionCreator.updateMyBids(allProject, finalBidPrice, email)),
-        getOtherSupplierBids: (email) => dispatch(getActionCreator.getOtherSupplierBids(email))
+        getOtherSupplierBids: (email) => dispatch(getActionCreator.getOtherSupplierBids(email)),
+
     }
 }
 

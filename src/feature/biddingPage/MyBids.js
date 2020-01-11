@@ -18,6 +18,7 @@ class Bid extends Component {
 
     componentDidMount = () => {
         // Fetching data from MyBids Document
+        console.log("In MyBids")
         this.props.getDataFromMyBids(this.props.currentLoggedInUserEmail);
     }
 
@@ -33,6 +34,11 @@ class Bid extends Component {
         this.setState({
             tempBid: event.target.value
         })
+    }
+
+    getProject = (projectId) => {
+        this.props.getProject(projectId);
+        this.props.history.push('/bidding');
     }
 
     render() {
@@ -70,7 +76,7 @@ class Bid extends Component {
                                          * because each time we click on next page
                                          * it will set index again to 0
                                          */
-                                        index = post.key;
+                                        // index = post.key;
 
                                         return (
                                             <Card link raised={true} style={bidCardList} key={index}>
@@ -82,11 +88,13 @@ class Bid extends Component {
                                                         color="blue"
                                                         className="card-button"
                                                         size="large"
-                                                        onClick={() => this.props.toggleModal(post.title, post.basePrice, index, post.location)}>
+                                                        //onClick={() => this.props.toggleModal(post.title, post.basePrice, post.key, post.location)}>
+                                                        onClick={() => this.getProject(post.key)}>
                                                         Rebid
                                                     </Button>
 
                                                     {/* Middle */}
+
                                                     <div className="card-button" style={{ color: "blue", borderRadius: "2px", background: "white", marginLeft: "10px", marginRight: "10px" }}>
                                                         <table>
                                                             <tbody>
@@ -95,6 +103,8 @@ class Bid extends Component {
                                                             </tbody>
                                                         </table>
                                                     </div>
+
+
 
                                                     {/* left */}
                                                     <div className="card-button" style={{ borderRadius: "2px", background: "rgb(220,220,220)" }}>
@@ -240,9 +250,11 @@ const mapDispatchToProps = dispatch => {
         handleNextPage: () => dispatch({ type: HANDLE_NEXT }),
         handlePreviouspage: () => dispatch({ type: HANDLE_PREVIOUS }),
         reset: () => dispatch({ type: HANDLE_RESET }),
-        toggleModal: (title, basePrice, index, location) => dispatch({ type: TOGGLE_MODAL, title: title, basePrice: basePrice, index: index, location: location }),
+        toggleModal: (title, basePrice, projectId, location) => dispatch({ type: TOGGLE_MODAL, title: title, basePrice: basePrice, index: projectId, location: location }),
         yourBid: (yourBid) => dispatch({ type: YOUR_BID, yourBid: yourBid }),
-        getDataFromMyBids: (email) => dispatch(actionCreator.getDataFromMyBids(email))
+        getDataFromMyBids: (email) => dispatch(actionCreator.getDataFromMyBids(email)),
+        getProject: (projectId) => dispatch(actionCreator.getProject(projectId))
+
     }
 }
 

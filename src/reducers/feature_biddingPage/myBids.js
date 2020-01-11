@@ -50,6 +50,7 @@ const reducer_bid = (state = initialState, action) => {
             return { ...state, begin: 0, end: 9, page: 1 }
 
         case TOGGLE_MODAL:
+            console.log(action.index)
             return { ...state, modalIsopen: !state.modalIsopen, title: action.title, basePrice: action.basePrice, index: action.index, location: action.location }
 
         case YOUR_BID:
