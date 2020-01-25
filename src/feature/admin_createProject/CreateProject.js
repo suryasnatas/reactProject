@@ -3,12 +3,14 @@
  * predefined libraries and Components
  */
 import React from 'react';
-import { Grid, Form, Segment, Button, Header, Message } from 'semantic-ui-react';
+import { Grid, Form, Segment, Button, Header, Message, Table, Input, Label } from 'semantic-ui-react';
 import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { SET_UPDATE_COUNTRY } from '../../actions/constants'
 import '../../styles/Registration.css';
 import * as actionCreator from "../../actions/postActions";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+
 
 /**
  * User defined Components
@@ -28,7 +30,60 @@ class CreateProject extends React.Component {
         postedBy: '',
         endsBy: "",
         comment: '',
-        basePrice: ''
+        basePrice: '',
+        WorkItemModal: false,
+        workItem: '',
+        quantity: '',
+        amount: '',
+        workItems: [
+        ],
+        currentIndex: 0
+    }
+
+    handleBlur = (index) => {
+        console.log("In Blur")
+        if (this.state.currentIndex !== index) {
+            this.setState({
+                workItem: '',
+                quantity: '',
+                amount: ''
+            })
+        }
+    }
+
+    handleWorkItems = (event) => {
+        event.preventDefault();
+        this.setState({
+            WorkItemModal: !this.state.WorkItemModal
+        })
+    }
+
+    handleWorkItemInputChange = (e, index, item) => {
+
+        this.setState({
+            currentIndex: index
+        })
+
+        let amount = '';
+        if (item === 'workItem')
+            this.setState({ workItem: e.target.value })
+        else if (item === 'quantity')
+            this.setState({ quantity: e.target.value })
+        else {
+            amount = e.target.value
+            this.setState({ amount: e.target.value })
+        }
+
+        if (this.state.workItem.length > 0 && this.state.quantity.length > 0 && this.state.amount.length > 0) {
+            let json = {
+                workItem: this.state.workItem,
+                quantity: this.state.quantity,
+                amount
+            }
+            this.state.workItems[index] = json;
+        }
+
+        console.log(this.state.workItems)
     }
 
 
@@ -62,7 +117,7 @@ class CreateProject extends React.Component {
                 endsBy: this.state.endsBy,
                 comment: this.state.comment,
                 basePrice: this.state.basePrice,
-              
+
             }
 
             //const updatedUserDetailsAsString = JSON.stringify(projectDetails);
@@ -111,7 +166,7 @@ class CreateProject extends React.Component {
      * @boolean @const isFormEmpty
      */
     isFormEmpty = ({ projectTitle, location, postedBy, endsBy, comment, basePrice }) => {
-        
+
         return !projectTitle.length || !location.length || !postedBy.length || !endsBy.toString().length || !comment.length || !basePrice.length;
     }
 
@@ -150,6 +205,13 @@ class CreateProject extends React.Component {
         this.props.setUpdatedData(SET_UPDATE_COUNTRY, data.value)
     }
 
+    addWorkItem = (e) => {
+        this.setState({
+            workItems: [...this.state.workItems, ""]
+        })
+    }
+
+
     render() {
 
         if (this.props.isLoggedIn === false) {
@@ -172,6 +234,86 @@ class CreateProject extends React.Component {
                         <TopHeader />
                     </Grid.Column>
                 </Grid.Row>
+
+                <Modal size="lg" fade={true} isOpen={this.state.WorkItemModal}>
+
+                    <ModalHeader>
+                        <span style={{ marginLeft: "520px", float: "right", cursor: "pointer" }} onClick={this.handleWorkItems}>X</span>
+                        <b style={{ fontSize: "20px", padding: "5px" }}>Fiber expansion in Derby</b><br />
+                        <i className="fa fa-map-marker" style={{ fontSize: "24px", padding: "5px" }}></i>
+                        <span style={{ fontSize: "18px", color: "gray", marginLeft: "4px", padding: "3px" }}>Shefield and Lincs</span>
+                    </ModalHeader>
+
+                    <ModalBody>
+                        <Table celled>
+
+                            <Table.Header>
+                                <Table.Row>
+                                    <Table.HeaderCell>Work Items</Table.HeaderCell>
+                                    <Table.HeaderCell>Quantity</Table.HeaderCell>
+                                    <Table.HeaderCell>Your Price</Table.HeaderCell>
+                                    <Table.HeaderCell />
+                                </Table.Row>
+                            </Table.Header>
+
+                            <Table.Body>
+
+                                {
+                                    this.state.workItems.map((workItem, key) => {
+                                        return (
+                                            <Table.Row key={key}>
+                                                <Table.Cell> <Input labelPosition='right' type='text' required="required">
+                                                    <Input placeholder='Work Item' onChange={(e) => this.handleWorkItemInputChange(e, key, "workItem")} />
+                                                </Input></Table.Cell>
+                                                <Table.Cell> <Input labelPosition='right' type='text' required="required">
+                                                    <Input placeholder='Quantity' onChange={(e) => this.handleWorkItemInputChange(e, key, "quantity")} />
+                                                </Input></Table.Cell>
+                                                <Table.Cell>
+                                                    <Input labelPosition='right' type='text' required="required">
+                                                        <Label basic>$</Label>
+                                                        <Input placeholder='Amount'
+                                                            onChange={(e) => this.handleWorkItemInputChange(e, key, "price")}
+                                                            onBlur={() => this.handleBlur(key)} />
+                                                    </Input>
+                                                </Table.Cell>
+                                                <Table.Cell>
+                                                    <Button negative
+                                                        size="mini"
+                                                        onClick={(e) => this.addWorkItem(e)}
+                                                    >+</Button>
+                                                </Table.Cell>
+                                            </Table.Row>
+                                        )
+                                    })}
+
+
+
+                                <Table.Row>
+                                    <Table.Cell><b>Total</b></Table.Cell>
+                                    <Table.Cell><b>11</b></Table.Cell>
+                                    <Table.Cell><b>$15</b></Table.Cell>
+                                    <Table.Cell>
+                                        <b style={{ color: "blue" }}>
+                                            {isNaN(this.props.yourBid) ? "" : "$" + this.props.yourBid}
+                                        </b>
+                                        <Button negative
+                                            size="mini"
+                                            onClick={(e) => this.addWorkItem(e)}
+                                        >+</Button>
+                                    </Table.Cell>
+
+                                </Table.Row>
+                            </Table.Body>
+                        </Table>
+                    </ModalBody>
+
+                    <ModalFooter>
+                        <Button color="red" onClick={this.handleWorkItems}>Close</Button>
+                        <Button color="blue" onClick={() => this.handleSubmit(this.props.yourBid)}>Add WorkItems</Button>
+                    </ModalFooter>
+
+                </Modal>
+
 
                 {/* Body */}
                 <Grid.Row style={{ marginTop: "10px" }}>
@@ -257,12 +399,21 @@ class CreateProject extends React.Component {
 
                                 />
 
-
-                                <div className="g-recaptcha" data-sitekey="6Lcpx4oUAAAAAFZMVogUhhVpFccx9RIpj7QF3not" ></div>
+                                <Button
+                                    color="green"
+                                    floated="left"
+                                    size="small"
+                                    onClick={this.handleWorkItems}>
+                                    Add WorkItems
+                                    <span color="red">*</span>
+                                </Button>
+                                <br />
                                 <br />
 
                                 <input type="checkbox" className="checkbox" required />
                                 <label>&nbsp;I accept the <Link to='/'>Terms of Service</Link><i style={style}>*</i></label>
+
+
 
                                 <Button
                                     color="purple"

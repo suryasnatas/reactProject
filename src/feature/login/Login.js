@@ -26,7 +26,11 @@ class Login extends React.Component {
         password: "",
         errors: [],
         loading: false,
-        loggedIn: false
+        loggedIn: false,
+        testInput:{
+            a:'a',
+            b:'b'
+        }
     };
 
     displayErrors = errors =>
@@ -95,8 +99,11 @@ class Login extends React.Component {
         const { email, password, errors, loading } = this.state;
 
         return (
+<div>
+    
 
             <Grid textAlign="center" verticalAlign="middle" className="app">
+            
 
                 {/* Header */}
                 <Grid.Row>
@@ -112,10 +119,12 @@ class Login extends React.Component {
                         <Header as="h1" icon color="purple" textAlign="center">
                             Login
                         </Header>
+                        
 
                         <Form onSubmit={this.handleSubmit} size="large">
 
                             <Segment stacked>
+
 
                                 <Form.Input
                                     fluid
@@ -130,7 +139,7 @@ class Login extends React.Component {
                                     required
                                 />
 
-                                <Form.Input
+                                                                <Form.Input
                                     fluid
                                     name="password"
                                     icon="lock"
@@ -192,6 +201,7 @@ class Login extends React.Component {
                 </Grid.Row>
 
             </Grid>
+            </div>
         );
     }
 }
