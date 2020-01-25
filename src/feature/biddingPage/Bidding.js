@@ -19,7 +19,15 @@ class Bidding extends Component {
 
     state = {
         proceed: false,
-        showOtherSuppliers: false
+        showOtherSuppliers: false,
+        bid: 0,
+        indexOfBid: '',
+        totalBid: 0
+    }
+
+    componentDidMount() {
+        this.props.getWorkItems(this.props.projectId)
+
     }
 
     handleSubmit = (total) => {
@@ -29,24 +37,53 @@ class Bidding extends Component {
         this.props.finalBidPrice("$" + total)
     }
 
-    handleChange = (param, event) => {
-        let key = param.key;
+    handleBlur = (currentIndex) => {
 
-        switch (key) {
-            case 0:
-                this.props.handleNum1(event.target.value);
-                break;
-            case 1:
-                this.props.handleNum2(event.target.value);
-                break;
-            case 2:
-                this.props.handleNum3(event.target.value);
-                break;
-            case 3:
-                this.props.handleNum4(event.target.value);
-                break;
-            default:
+        console.log("Index" + currentIndex);
+
+        let totalBid = 0;
+        totalBid = this.state.bid * 1 + this.state.totalBid * 1
+
+        console.log(this.state.bid * 1);
+        console.log(totalBid);
+
+        this.setState({
+            totalBid
+        })
+
+        if (this.state.indexOfBid !== currentIndex) {
+            this.setState({
+                bid: 0
+            })
         }
+    }
+
+    handleChange = (param, event) => {
+        let index = param.key;
+
+        let bid = 0;
+        bid += event.target.value * 1;
+
+        this.setState({
+            bid,
+            indexOfBid: index
+        })
+
+        // switch (key) {
+        //     case 0:
+        //         this.props.handleNum1(event.target.value);
+        //         break;
+        //     case 1:
+        //         this.props.handleNum2(event.target.value);
+        //         break;
+        //     case 2:
+        //         this.props.handleNum3(event.target.value);
+        //         break;
+        //     case 3:
+        //         this.props.handleNum4(event.target.value);
+        //         break;
+        //     default:
+        // }
     }
 
     handleProceed = (finalBidPrice) => {
@@ -68,8 +105,8 @@ class Bidding extends Component {
         this.props.updateMyBids(allProject, finalBidPrice, this.props.currentLoggedInUserEmail);
     }
 
-    handleShowOtherSuppliers = () => {
-        this.props.getOtherSupplierBids(this.props.currentLoggedInUserEmail);
+    handleShowOtherSuppliers = (projectId) => {
+        this.props.getOtherSupplierBids(this.props.currentLoggedInUserEmail, projectId);
         this.setState({
             showOtherSuppliers: true
         })
@@ -88,7 +125,10 @@ class Bidding extends Component {
         }
 
         let totalBasePrice = 0;
-        this.props.workItems.map(item => totalBasePrice += (item.quantity * item.basePrice))
+        let totalWorkItems = 0;
+        this.props.workItems.map(item => totalBasePrice += (item.quantity * item.amount))
+        this.props.workItems.map(item => totalWorkItems += (item.quantity * 1))
+
 
         return (
             <div>
@@ -122,14 +162,14 @@ class Bidding extends Component {
                                     <Card.Header><Label color="blue" size="big" ribbon>{this.props.projectTitle}</Label></Card.Header>
 
                                     <Card.Meta>
-                                        <span className='ends'>Ends:<span style={{ color: "black" }}>ends</span></span>&nbsp;&nbsp;
-                                        <span className='postedBy'>Posted by:<span style={{ color: "black" }}>OpenReach</span></span>&nbsp;&nbsp;
-                                        <span className='location'>Location:<span style={{ color: "black" }}>location</span></span>
+                                        <span className='ends'>Ends:<span style={{ color: "black" }}>{this.props.endsBy}</span></span>&nbsp;&nbsp;
+                                        <span className='postedBy'>Posted by:<span style={{ color: "black" }}>{this.props.postedBy}</span></span>&nbsp;&nbsp;
+                                        <span className='location'>Location:<span style={{ color: "black" }}>{this.props.location}</span></span>
                                     </Card.Meta>
 
                                     <div>
                                         <br />
-                                        <Button basic color='blue' onClick={this.handleShowOtherSuppliers}>
+                                        <Button basic color='blue' onClick={()=>this.handleShowOtherSuppliers(this.props.projectId)}>
                                             <Icon name='fork' />
                                             Show Bids By Other Suppliers
                                         </Button>
@@ -139,10 +179,10 @@ class Bidding extends Component {
                                             <table>
                                                 <tbody>
                                                     <tr><td><b style={{ color: "black" }}><Label color="purple" ribbon>Your Bid</Label></b></td></tr>
-                                                    <tr><td><b>{this.props.finalYourBid}</b></td></tr>
+                                                    <tr><td><b>{this.state.totalBid}</b></td></tr>
                                                     {
                                                         this.state.proceed ? (<tr><td>   <Button
-                                                            onClick={() => this.handleProceed(this.props.finalYourBid)}
+                                                            onClick={() => this.handleProceed(this.state.totalBid)}
                                                             color="green"
                                                             className="card-button"
                                                             size="small">
@@ -176,7 +216,7 @@ class Bidding extends Component {
                                 this.props.otherSuppliers.map((supplier, key) => (
 
                                     <div key={key}>
-                                        <Button onClick={() => this.props.getOtherSupplierBids(this.props.currentLoggedInUserEmail)} as='div' labelPosition='right'>
+                                        <Button onClick={() => this.props.getOtherSupplierBids(this.props.currentLoggedInUserEmail, this.props.projectId)} as='div' labelPosition='right'>
                                             <Button basic color='blue'>
                                                 <Icon name='fork' />
                                                 {supplier.email}
@@ -213,7 +253,6 @@ class Bidding extends Component {
 
                                 <Table.Header>
                                     <Table.Row>
-                                        <Table.HeaderCell>Unic ID</Table.HeaderCell>
                                         <Table.HeaderCell>Work Items</Table.HeaderCell>
                                         <Table.HeaderCell>Quantity</Table.HeaderCell>
                                         <Table.HeaderCell>Base Price</Table.HeaderCell>
@@ -226,12 +265,16 @@ class Bidding extends Component {
                                         this.props.workItems.map((item, key) => {
                                             return (
                                                 <Table.Row key={key}>
-                                                    <Table.Cell>{item.unicID}</Table.Cell>
                                                     <Table.Cell>{item.workItem}</Table.Cell>
                                                     <Table.Cell>{item.quantity}</Table.Cell>
-                                                    <Table.Cell>{item.basePrice}</Table.Cell>
+                                                    <Table.Cell>{item.amount}</Table.Cell>
                                                     <Table.Cell>
-                                                        <Input onChange={this.handleChange.bind(this, { key })} labelPosition='right' type='text' placeholder='Amount' required="required">
+                                                        <Input onChange={this.handleChange.bind(this, { key })}
+                                                            labelPosition='right'
+                                                            type='text'
+                                                            placeholder='Amount'
+                                                            required="required"
+                                                            onBlur={() => this.handleBlur(key)}>
                                                             <Label basic>$</Label>
                                                             <input />
                                                             <Label><Icon name="edit"></Icon></Label>
@@ -243,13 +286,12 @@ class Bidding extends Component {
                                     }
 
                                     <Table.Row>
-                                        <Table.Cell></Table.Cell>
                                         <Table.Cell><b>Total</b></Table.Cell>
-                                        <Table.Cell><b>11</b></Table.Cell>
+                                        <Table.Cell><b>{totalWorkItems}</b></Table.Cell>
                                         <Table.Cell><b>${totalBasePrice}</b></Table.Cell>
                                         <Table.Cell>
                                             <b style={{ color: "blue" }}>
-                                                {isNaN(this.props.yourBid) ? "" : "$" + this.props.yourBid}
+                                                {isNaN(this.state.totalBid) ? "" : "$" + this.state.totalBid}
                                             </b>
                                         </Table.Cell>
                                     </Table.Row>
@@ -310,7 +352,8 @@ const mapDispatchToProps = dispatch => {
         handleNum4: (value) => dispatch({ type: "NUM_FOUR", payload: value }),
         finalBidPrice: (value) => dispatch({ type: "FINAL_BID_PRICE", payload: value }),
         updateMyBids: (allProject, finalBidPrice, email) => dispatch(postActionCreator.updateMyBids(allProject, finalBidPrice, email)),
-        getOtherSupplierBids: (email) => dispatch(getActionCreator.getOtherSupplierBids(email)),
+        getOtherSupplierBids: (email, projectId) => dispatch(getActionCreator.getOtherSupplierBids(email, projectId)),
+        getWorkItems: (projectId) => dispatch(getActionCreator.getWorkItems(projectId))
 
     }
 }

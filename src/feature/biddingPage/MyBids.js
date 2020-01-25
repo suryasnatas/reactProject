@@ -98,8 +98,8 @@ class Bid extends Component {
                                                     <div className="card-button" style={{ color: "blue", borderRadius: "2px", background: "white", marginLeft: "10px", marginRight: "10px" }}>
                                                         <table>
                                                             <tbody>
-                                                                <tr><td><b style={{ color: "black" }}>your Bid</b></td></tr>
-                                                                <tr><td><b style={{ marginLeft: "6px" }}>{this.props.posts[index].yourBid}</b></td></tr>
+                                                                <tr><td><b style={{ color: "black" }}>Your Bid</b></td></tr>
+                                                                <tr><td><b style={{ marginLeft: "6px" }}>${this.props.posts[index].yourBid}</b></td></tr>
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -111,7 +111,7 @@ class Bid extends Component {
                                                         <table>
                                                             <tbody>
                                                                 <tr><td>Base Price</td></tr>
-                                                                <tr><td><center>{post.basePrice}</center></td></tr>
+                                                                <tr><td><center>${post.basePrice}</center></td></tr>
                                                             </tbody>
                                                         </table>
                                                     </div>

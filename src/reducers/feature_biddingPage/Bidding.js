@@ -9,13 +9,13 @@ const initialState = {
     num4: 0,
     total: 0,
     workItems: [
-        { unicID: "ID79879", workItem: "Wire", quantity: "3", basePrice: "120" },
-        { unicID: "ID79879", workItem: "Civil Wiring", quantity: "1", basePrice: "18" },
-        { unicID: "ID79879", workItem: "Wire(Under)", quantity: "2", basePrice: "180" },
-        { unicID: "ID79879", workItem: "Wire", quantity: "5", basePrice: "50" }
+        // { unicID: "ID79879", workItem: "Wire", quantity: "3", basePrice: "120" },
+        // { unicID: "ID79879", workItem: "Civil Wiring", quantity: "1", basePrice: "18" },
+        // { unicID: "ID79879", workItem: "Wire(Under)", quantity: "2", basePrice: "180" },
+        // { unicID: "ID79879", workItem: "Wire", quantity: "5", basePrice: "50" }
     ],
     otherSuppliers: [],
-    projectId:'',
+    projectId: '',
     projectTitle: '',
     location: '',
     postedBy: '',
@@ -27,6 +27,8 @@ const initialState = {
 const reducer_bidding = (state = initialState, action) => {
 
     switch (action.type) {
+        case "UPDATE_WORK_ITEMS":
+            return { ...state, workItems: action.payload }
 
         case "TOGGLE_BIDDING_MODAL":
             return { ...state, modalIsopen: !state.modalIsopen }
@@ -51,7 +53,7 @@ const reducer_bidding = (state = initialState, action) => {
         case "UPDATE_PROJECT_DETAILS":
             return {
                 ...state,
-                projectId:  action.payload.projectId,
+                projectId: action.payload.projectId,
                 projectTitle: action.payload.projectTitle,
                 location: action.payload.location,
                 postedBy: action.payload.postedBy,
@@ -61,8 +63,8 @@ const reducer_bidding = (state = initialState, action) => {
             }
 
         case "OTHER_SUPPLIERS":
-             return { ...state, otherSuppliers: action.payload }
-        
+            return { ...state, otherSuppliers: action.payload }
+
 
         case "LOGOUT":
             return {

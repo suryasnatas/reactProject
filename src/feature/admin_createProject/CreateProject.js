@@ -37,7 +37,8 @@ class CreateProject extends React.Component {
         amount: '',
         workItems: [
         ],
-        currentIndex: 0
+        currentIndex: 0,
+        addWorkItemButton: true
     }
 
     handleBlur = (index) => {
@@ -117,6 +118,7 @@ class CreateProject extends React.Component {
                 endsBy: this.state.endsBy,
                 comment: this.state.comment,
                 basePrice: this.state.basePrice,
+                workItems: this.state.workItems
 
             }
 
@@ -143,16 +145,6 @@ class CreateProject extends React.Component {
             this.setState({ errors: errors.concat(error) });
             return false;
         }
-
-
-
-        // else if (!this.isPasswordValid(this.state)) {
-
-        //     error = { message: 'Password is invalid' };
-        //     this.setState({ errors: errors.concat(error) });
-        //     return false;
-
-        // }
         else {
             this.setState({
                 errors: []
@@ -207,7 +199,14 @@ class CreateProject extends React.Component {
 
     addWorkItem = (e) => {
         this.setState({
-            workItems: [...this.state.workItems, ""]
+            workItems: [...this.state.workItems, ""],
+        })
+    }
+
+    addWorkItemButton = (e) => {
+        this.setState({
+            workItems: [...this.state.workItems, ""],
+            addWorkItemButton: !this.state.addWorkItemButton
         })
     }
 
@@ -289,17 +288,18 @@ class CreateProject extends React.Component {
 
 
                                 <Table.Row>
-                                    <Table.Cell><b>Total</b></Table.Cell>
-                                    <Table.Cell><b>11</b></Table.Cell>
-                                    <Table.Cell><b>$15</b></Table.Cell>
+                                   
                                     <Table.Cell>
                                         <b style={{ color: "blue" }}>
                                             {isNaN(this.props.yourBid) ? "" : "$" + this.props.yourBid}
                                         </b>
-                                        <Button negative
+
+                                        {this.state.addWorkItemButton ? (<Button negative
                                             size="mini"
-                                            onClick={(e) => this.addWorkItem(e)}
-                                        >+</Button>
+                                            onClick={(e) => this.addWorkItemButton(e)}>
+                                            Click Here to add WorkItems
+                                                </Button>) : ("")}
+
                                     </Table.Cell>
 
                                 </Table.Row>
@@ -309,7 +309,7 @@ class CreateProject extends React.Component {
 
                     <ModalFooter>
                         <Button color="red" onClick={this.handleWorkItems}>Close</Button>
-                        <Button color="blue" onClick={() => this.handleSubmit(this.props.yourBid)}>Add WorkItems</Button>
+                        <Button color="blue" onClick={this.handleWorkItems}>Add WorkItems</Button>
                     </ModalFooter>
 
                 </Modal>

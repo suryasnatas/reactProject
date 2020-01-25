@@ -11,7 +11,7 @@ export const getDataFromMyBids = (email) => dispatch => {
      * @param {*} URL
      * It's a REST endpoint that gets data from DB: myBids
      */
-    const URL = `http://localhost:8080/getMyBids/`+ email ;
+    const URL = `http://localhost:8080/getMyBids/` + email;
 
     axios.get(URL)
         .then(res => {
@@ -174,7 +174,7 @@ export const proceedToUpdateMyBids = (projectId, finalBidPrice) => dispatch => {
 }
 
 
-export const getOtherSupplierBids = (email) => dispatch => {
+export const getOtherSupplierBids = (email, projectId) => dispatch => {
 
     /**
      * @param {*} URL
@@ -182,7 +182,7 @@ export const getOtherSupplierBids = (email) => dispatch => {
      */
 
     console.log("valid")
-    const URL = 'http://localhost:8080/getOtherSupplierBids/'+ email;
+    const URL = 'http://localhost:8080/getOtherSupplierBids/' + email + '/' + projectId;
 
     console.log("emailV")
     axios.get(URL)
@@ -200,4 +200,33 @@ export const getOtherSupplierBids = (email) => dispatch => {
         }
         );
 }
+
+
+export const getWorkItems = (projectId) => dispatch => {
+
+    /**
+     * @param {*} URL
+     * It's a REST endpoint that gets data from DB: myProjects
+     */
+
+    console.log("valid")
+    const URL = 'http://localhost:8080/getWorkItems/' + projectId;
+
+    console.log("getWorkItems")
+    axios.get(URL)
+        .then(res => {
+            /**
+             * @param OTHER_SUPPLIERS
+             * @Location '../reducers/feature_myProjects/MyProjects.js'
+             */
+            console.log(res.data);
+
+            dispatch({
+                type: "UPDATE_WORK_ITEMS",
+                payload: res.data
+            })
+        }
+        );
+}
+
 
