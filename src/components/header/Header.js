@@ -40,7 +40,12 @@ class HeaderPage extends React.Component {
                                     items={[
                                         <Link to='/profile' style={{ float: "left" }}>
                                             <MenuItem style={{ color: "purple" }}>MyProfile</MenuItem>
-                                        </Link>
+                                        </Link>,
+
+                                        this.props.email === "suryasnata.2@gmail.com" ?
+                                            <Link to='/createProject' style={{ float: "left" }}>
+                                                <MenuItem style={{ color: "purple" }}>Create Project</MenuItem>
+                                            </Link> : ""
                                     ]} />
                             </Grid.Column>
 
@@ -112,7 +117,8 @@ class HeaderPage extends React.Component {
 const mapStateToProps = state => {
     return {
         isLoggedIn: state.loginReducer.isLoggedIn,
-        logoutFlag: state.loginReducer.logoutFlag
+        logoutFlag: state.loginReducer.logoutFlag,
+        email: state.loginReducer.email
     }
 }
 

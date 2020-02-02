@@ -81,6 +81,7 @@ class CreateProject extends React.Component {
                 quantity: this.state.quantity,
                 amount
             }
+            // eslint-disable-next-line
             this.state.workItems[index] = json;
         }
 
@@ -214,6 +215,9 @@ class CreateProject extends React.Component {
     render() {
 
         if (this.props.isLoggedIn === false) {
+            return <Redirect to='' />
+        }
+        if (this.props.email !== 'suryasnata.2@gmail.com') {
             return <Redirect to='' />
         }
 
@@ -454,10 +458,11 @@ class CreateProject extends React.Component {
 }
 
 
-
 const mapStateToProps = state => {
     return {
         id: state.reducer_profileUpdate.id,
+        isLoggedIn: state.loginReducer.isLoggedIn,
+        email: state.loginReducer.email
     }
 }
 

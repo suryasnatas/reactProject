@@ -63,3 +63,6 @@ export const UPDATE_ALL_PROJECT_LIST = 'UPDATE_ALL_PROJECT_LIST';
  * Profile.js constants
  */
 export const SET_UPDATE_COUNTRY = 'SET_UPDATE_COUNTRY';
+
+export const GENERATE_OTP = 'GENERATE_OTP';
+export const REMOVE_OTP = "REMOVE_OTP";

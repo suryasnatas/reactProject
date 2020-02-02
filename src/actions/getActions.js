@@ -1,7 +1,7 @@
 /**
  * @author Suryasnata Nayak 
  */
-import { UPDATE_BIDDING_LIST, UPDATE_ALL_PROJECT_LIST, UPDATE_PROJECT_LIST, USERNAME_OR_EMAIL_ALREADY_EXISTS, EMAIL_ALREADY_EXISTS } from '../actions/constants'
+import { UPDATE_BIDDING_LIST, UPDATE_ALL_PROJECT_LIST, UPDATE_PROJECT_LIST, USERNAME_OR_EMAIL_ALREADY_EXISTS, EMAIL_ALREADY_EXISTS, GENERATE_OTP } from '../actions/constants'
 import axios from 'axios';
 //import { browserHistory } from 'react-router';
 // GET MyBids data from database
@@ -230,3 +230,36 @@ export const getWorkItems = (projectId) => dispatch => {
 }
 
 
+
+export const generateOTP = (phoneNumber) => dispatch => {
+
+    /**
+     * @param {*} URL
+     * It's a REST endpoint that gets data from DB: myProjects
+     */
+
+    console.log("valid")
+    const URL = 'http://localhost:8080/generateOTP/' + phoneNumber;
+
+    console.log("Generate OTP")
+    axios.get(URL)
+        .then(res => {
+            console.log(res.data);
+            dispatch({
+                type: GENERATE_OTP,
+                payload: res.data
+            })
+        }
+        );
+}
+
+
+export const updatePasseord = (newPassword, phoneNumber) => dispatch => {
+
+    const URL = 'http://localhost:8080/updatePassword/' + phoneNumber + '/' + newPassword;
+    axios.get(URL)
+        .then(res => {
+            console.log("Password successfully updated");
+        }
+        );
+}
