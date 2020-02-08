@@ -46,6 +46,12 @@ class HeaderPage extends React.Component {
                                             <Link to='/createProject' style={{ float: "left" }}>
                                                 <MenuItem style={{ color: "purple" }}>Create Project</MenuItem>
                                             </Link> : ""
+
+                                        ,
+                                        this.props.email === "suryasnata.2@gmail.com" ?
+                                        <Link to='/showBids' style={{ float: "left" }}>
+                                            <MenuItem style={{ color: "purple" }}>Show All Bids</MenuItem>
+                                        </Link>:""
                                     ]} />
                             </Grid.Column>
 
