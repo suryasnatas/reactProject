@@ -8,6 +8,6 @@ export const nextPageDisabled = { bottom: "0", position: "absolute", color: "gra
 
 export const cardHeader = { marginTop: "8px", marginBottom: "5px", marginLeft: "50px" };
 
-export const recomCard = { width: "309px", backgroundColor: "#eee" };
+export const recomCard = { width: "500px", backgroundColor: "#eee" };
 
 export const cardMeta = { color: "black" };

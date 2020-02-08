@@ -6,6 +6,7 @@ import loginReducer from './feature_login/login';
 import myProjectsReducer from './feature_myProjects/MyProjects';
 import myDashBoardReducer from './feature_myDashBoard/MyDashBoard';
 import reducer_profileUpdate from './feature_profile/profile';
+import showBids from './feature_showBids/showBids'
 /**
  * Combining reducers
  */
@@ -16,5 +17,6 @@ export default combineReducers({
     loginReducer: loginReducer,
     myProjectsReducer: myProjectsReducer,
     myDashBoardReducer: myDashBoardReducer,
-    reducer_profileUpdate: reducer_profileUpdate
+    reducer_profileUpdate: reducer_profileUpdate,
+    showBids: showBids
 });

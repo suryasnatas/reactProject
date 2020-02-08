@@ -29,6 +29,7 @@ import LandingPage from './feature/landingPage/LandingPage';
 import MyDashBoard from './feature/myDashBoard/MyDashBoard';
 import Profile from './feature/profile/Profile';
 import CreateProject from './feature/admin_createProject/CreateProject';
+import ShowBids from './feature/admin/ShowBids';
 
 
 class Root extends React.Component {
@@ -54,6 +55,8 @@ class Root extends React.Component {
                 <Route path="/myDashboard" component={MyDashBoard} />
                 <Route path="/profile" component={Profile} />
                 <Route path="/createProject" component={CreateProject} />
+                <Route path="/showBids" component={ShowBids} />
+
             </Switch>
         );
     }

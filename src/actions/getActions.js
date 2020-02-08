@@ -229,6 +229,26 @@ export const getWorkItems = (projectId) => dispatch => {
         );
 }
 
+export const getAllBids = () => dispatch => {
+
+    /**
+     * @param {*} URL
+     * It's a REST endpoint that gets data from DB: myProjects
+     */
+
+    const URL = 'http://localhost:8080/getAllBids';
+
+    axios.get(URL)
+        .then(res => {
+            console.log(res.data)
+            dispatch({
+                type: "GET_ALL_BIDS",
+                payload: res.data
+            })
+        }
+        );
+}
+
 
 
 export const generateOTP = (phoneNumber) => dispatch => {
