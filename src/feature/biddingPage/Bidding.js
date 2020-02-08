@@ -188,7 +188,7 @@ class Bidding extends Component {
                                                             size="small">
                                                             Proceed >>
                                                          </Button>
-                                                        </td></tr>) : ("")
+                                                        </td></tr>) : (<tr></tr>)
                                                     }
 
                                                 </tbody>

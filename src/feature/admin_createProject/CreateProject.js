@@ -199,9 +199,20 @@ class CreateProject extends React.Component {
     }
 
     addWorkItem = (e) => {
+        console.log(this.state.workItems)
         this.setState({
             workItems: [...this.state.workItems, ""],
         })
+    }
+
+    deleteWorkItem = (key) => {
+        console.log("deleted index: " + key)
+        var deletedWorkItems = [...this.state.workItems];
+        deletedWorkItems.splice(key, 1);
+        this.setState({
+            workItems: deletedWorkItems
+        })
+        console.log(this.state.workItems)
     }
 
     addWorkItemButton = (e) => {
@@ -280,10 +291,14 @@ class CreateProject extends React.Component {
                                                     </Input>
                                                 </Table.Cell>
                                                 <Table.Cell>
-                                                    <Button negative
+                                                    <Button positive
                                                         size="mini"
                                                         onClick={(e) => this.addWorkItem(e)}
                                                     >+</Button>
+                                                    <Button negative
+                                                        size="mini"
+                                                        onClick={() => this.deleteWorkItem(key)}
+                                                    >-</Button>
                                                 </Table.Cell>
                                             </Table.Row>
                                         )
@@ -292,13 +307,14 @@ class CreateProject extends React.Component {
 
 
                                 <Table.Row>
-                                   
+
                                     <Table.Cell>
                                         <b style={{ color: "blue" }}>
                                             {isNaN(this.props.yourBid) ? "" : "$" + this.props.yourBid}
                                         </b>
 
-                                        {this.state.addWorkItemButton ? (<Button negative
+                                        
+                                        {this.state.addWorkItemButton ? (<Button positive
                                             size="mini"
                                             onClick={(e) => this.addWorkItemButton(e)}>
                                             Click Here to add WorkItems

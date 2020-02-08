@@ -147,8 +147,7 @@ class Registration extends React.Component {
 
             this.props.fetchPostsWithRedux(formData);
 
-            console.log(this.props.success)
-            if (this.props.success === 'username already Exists') {
+            if (this.props.success === 'username already exists') {
                 error = { message: 'Details already Exists.Please check email or username.' };
                 this.setState({ errors: errors.concat(error) });
                 return false;

@@ -322,7 +322,7 @@ class Login extends React.Component {
                                 }
                                 {
                                     this.state.enterNewPassword ? (<Table.Row>
-                                        <Table.HeaderCell>Phone Number:&nbsp;
+                                        <Table.HeaderCell>&nbsp;
                                                     <Input placeholder="Enter new Password..."
                                                 onChange={this.handleChangeNewPassoword}
                                             ></Input>&nbsp;
