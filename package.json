@@ -32,7 +32,7 @@
     "mdbreact": "^4.11.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.3",
-    "react-admin": "^2.6.2",
+    "react-admin": "^4.7.0",
     "react-bootstrap": "^0.32.4",
     "react-chartjs-2": "^2.7.4",
     "react-circle": "^1.1.1",
